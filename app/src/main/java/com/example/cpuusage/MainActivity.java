@@ -6,35 +6,40 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity implements IView {
     private  CpuSampler cpuSampler;
-    private  Thread workThread;
+    private  Thread[] workThreads;
+    private boolean isWorking = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         cpuSampler = new CpuSampler(this);
-        start();
+        startMonitor();
 
         Button startTaskBtn = (Button)findViewById(R.id.startTask);
         startTaskBtn.setOnClickListener(new Button.OnClickListener(){
             @Override
             public void onClick(View v) {
-                    workThread = new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            for (int i =0;i<Integer.MAX_VALUE;i++)
-                            {
-                                for (int j = 0; j< Integer.MAX_VALUE; j++)
-                                {
-                                    float f = 1/3;
-                                }
-                            }
-                        }
-                    });
-
-                workThread.start();
+                if(isWorking == false)
+                {
+                    EditText editText = (EditText)findViewById(R.id.threadCount);
+                    String numStr = editText.getText().toString();
+                    int count = Integer.valueOf(numStr);
+                    if(count<0)
+                    {
+                        count =0;
+                    }
+                    workThreads = new Thread[count];
+                    for (int i = 0;i<workThreads.length;i++)
+                    {
+                        workThreads[i] = new working();
+                        workThreads[i].start();
+                    }
+                    isWorking = true;
+                }
             }
         });
 
@@ -42,7 +47,16 @@ public class MainActivity extends AppCompatActivity implements IView {
         stopTaskBtn.setOnClickListener(new Button.OnClickListener(){
             @Override
             public void onClick(View v) {
-                workThread.interrupt();
+                if(isWorking ==true)
+                {
+                    for (int i = 0 ;i<workThreads.length;i++)
+                    {
+                        workThreads[i].interrupt();
+                        workThreads[i]=null;
+                    }
+                    workThreads = null;
+                    isWorking = false;
+                }
             }
         });
     }
@@ -76,10 +90,23 @@ public class MainActivity extends AppCompatActivity implements IView {
     };
 
 
-    private  void start()
+    private  void startMonitor()
     {
         Thread thread = new Thread(runnable);
         thread.start();
     }
-
+    private class working extends Thread
+    {
+        @Override
+        public void run() {
+            super.run();
+            while (isInterrupted() == false)
+            {
+                for (int i = 0;i<Short.MAX_VALUE;i++)
+                {
+                    float f = 1/3;
+                }
+            }
+        }
+    }
 }

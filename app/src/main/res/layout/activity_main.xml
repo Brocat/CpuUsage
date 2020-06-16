@@ -24,10 +24,33 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
+            android:id="@+id/label2"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="5dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginRight="0dp"
+            android:layout_marginBottom="0dp"
+            android:gravity="center_vertical"
+            android:text="JobCount:"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/threadCount"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="5dp"
+            android:ems="10"
+            android:inputType="numberDecimal"
+            tools:text="1" />
+
+        <TextView
             android:id="@+id/label"
             android:layout_width="match_parent"
-            android:layout_height="49dp"
-            android:layout_margin="15dp"
+            android:layout_height="50dp"
+            android:layout_margin="5dp"
             android:layout_marginLeft="0dp"
             android:layout_marginTop="0dp"
             android:layout_marginRight="0dp"
@@ -38,8 +61,8 @@
         <Button
             android:id="@+id/startTask"
             android:layout_width="match_parent"
-            android:layout_height="78dp"
-            android:layout_margin="15dp"
+            android:layout_height="50dp"
+            android:layout_margin="5dp"
             android:layout_marginLeft="0dp"
             android:layout_marginTop="0dp"
             android:layout_marginRight="0dp"
@@ -49,8 +72,8 @@
         <Button
             android:id="@+id/stopTask"
             android:layout_width="match_parent"
-            android:layout_height="78dp"
-            android:layout_margin="15dp"
+            android:layout_height="50dp"
+            android:layout_margin="5dp"
             android:layout_marginLeft="0dp"
             android:layout_marginTop="0dp"
             android:layout_marginRight="0dp"
